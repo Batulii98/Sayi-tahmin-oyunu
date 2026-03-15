@@ -7,34 +7,35 @@
 <style>
 
 body{
-    text-align:center;
-    font-family:Arial;
-    margin-top:100px;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:white;
-    transition:0.5s;
+text-align:center;
+font-family:Arial;
+margin-top:120px;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+transition:0.5s;
 }
 
 .oyun{
-    background:rgba(0,0,0,0.6);
-    padding:40px;
-    width:320px;
-    margin:auto;
-    border-radius:15px;
-    box-shadow:0px 0px 20px #00ffcc;
-}
-
-h1{
-    color:#00ffcc;
+background:rgba(0,0,0,0.6);
+padding:40px;
+width:320px;
+margin:auto;
+border-radius:15px;
+box-shadow:0px 0px 20px #00ffcc;
 }
 
 button{
-    font-size:20px;
-    padding:6px 20px;
-    border:none;
-    border-radius:8px;
-    background:#00ffcc;
-    cursor:pointer;
+font-size:20px;
+padding:8px 20px;
+border:none;
+border-radius:8px;
+background:#00ffcc;
+cursor:pointer;
+}
+
+input{
+font-size:20px;
+text-align:center;
 }
 
 </style>
@@ -45,28 +46,44 @@ button{
 <div class="oyun">
 
 <h1>Sayı Tahmin Oyunu</h1>
-<p>1 ile 10 arasında bir sayı tahmin et!</p>
+<p>1 ile 10 arasında bir sayı tahmin et</p>
 
-<form method="GET" action="/tahmin">
-<input type="number" name="sayi" min="1" max="10" required>
+<input id="tahmin" type="number" min="1" max="10">
 <br><br>
-<button type="submit">Tahmin Et</button>
-</form>
+<button onclick="kontrol()">Tahmin Et</button>
 
-<p>{{sonuc}}</p>
+<p id="sonuc"></p>
 
 </div>
 
 <script>
 
-let kazandi = "{{kazandi}}"
+let hedef = Math.floor(Math.random()*10)+1
 
-if(kazandi == "true"){
-    document.body.style.background = "green"
+function kontrol(){
 
-    setTimeout(function(){
-        location.href="/"
-    },1500)
+let tahmin = Number(document.getElementById("tahmin").value)
+let sonuc = document.getElementById("sonuc")
+
+if(tahmin < hedef){
+sonuc.innerText="Daha büyük bir sayı dene!"
+}
+
+else if(tahmin > hedef){
+sonuc.innerText="Daha küçük bir sayı dene!"
+}
+
+else{
+sonuc.innerText="Tebrikler doğru sayıyı buldun!"
+document.body.style.background="green"
+
+setTimeout(function(){
+hedef = Math.floor(Math.random()*10)+1
+document.body.style.background="linear-gradient(135deg,#0f2027,#203a43,#2c5364)"
+sonuc.innerText=""
+},1500)
+}
+
 }
 
 </script>
